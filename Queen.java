@@ -1,4 +1,379 @@
-1 import java.util.*;
+2 package dAA;
+import java.util.Scanner;
+
+public class Uniqueness {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter array elements: ");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        boolean found;
+        System.out.println("Unique Elements: ");
+        for (int i = 0; i < n; i++) {
+            found = false;
+            for (int j = 0; j < n; j++) {
+                if (i != j && arr[i] == arr[j]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println(arr[i]);
+            }
+        }
+        System.out.println("Duplicate Elements: ");
+        for (int i = 0; i < n; i++) {
+            found = false;
+            for (int k = 0; k < i; k++) {
+                if (arr[i] == arr[k]) {
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (found) continue;
+            int count = 0;
+            for (int j = 0; j < n; j++) {
+                if (arr[i] == arr[j]) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                System.out.println(arr[i]);
+            }
+        }
+        
+        sc.close();
+    }
+}
+3 package dAA;
+import java.util.*;
+public class Sieve {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter a number: ");
+        int num = sc.nextInt();
+        boolean[] bool = new boolean[num + 1];
+        for (int i = 0; i < bool.length; i++) {
+            bool[i] = true;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (bool[i] == true) {
+                for (int j = (i * i); j <= num; j = j + i) {
+                    bool[j] = false;
+                }
+            }
+        }
+        System.out.println("List of prime numbers up to " + num + " are: ");
+        for (int i = 2; i < bool.length; i++) {
+            if (bool[i] == true) {
+                System.out.println(i);
+            }
+        }
+        
+        sc.close();
+    }
+}
+5 package dAA;
+import java.util.*;
+class MergeSort
+{
+	static void sort(int n[],int l,int h)
+	{
+		int m=(l+h)/2;
+		if(l<h)
+		{
+			sort(n,l,m);
+			sort(n,m+1,h);
+			merge(n,l,m,h);
+		}
+	}
+	static void merge(int n[],int l,int m,int h)
+	{
+		int i=l,j=m+1,k=l;
+		int b[]=new int[n.length];
+		while(i<=m && j<=h)
+		{
+			b[k++]=(n[i]<n[j])?n[i++]:n[j++];
+		}
+		while(i<=m)
+		{
+			b[k++]=n[i++];
+		}
+		while(j<=h)
+		{
+			b[k++]=n[j++];
+		}
+		for(i=l;i<=h;i++)
+		{
+			n[i]=b[i];
+		}
+	}
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the number of elements");
+		int n=sc.nextInt();
+		int[]a=new int[n];
+		System.out.print("Enter all the elements");
+		for(int i=0;i<n;i++)
+		{
+			a[i]=sc.nextInt();
+		}
+		sort(a,0,n-1);
+		for(int x:a)
+		{
+			System.out.print(x+" ");
+		}
+	}
+}
+6 package dAA;
+import java.util.*;
+class QuickSort
+{
+	static void quick(int a[],int l,int h)
+	{
+		if(l<h)
+		{
+			int m=part(a,l,h);
+			quick(a,l,m-1);
+			quick(a,m+1,h);
+		}
+	}
+	static int part(int a[],int l,int h)
+	{
+		int pivot=a[l],i=l+1,j=h;
+		while(i<=j)
+		{
+			while(i<=h && a[i]<=pivot) i++;
+			while(a[j]>pivot)j--;
+			if(i<j) swap(a,i,j);
+		}
+		swap(a,l,j);
+		return j;
+	}
+	static void swap(int a[],int i,int j)
+	{
+		int t=a[i];
+		a[i]=a[j];
+		a[j]=t;
+	}
+	public static void main(String[]args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the number of element");
+		int n=sc.nextInt();
+		int a[]=new int[n];
+		System.out.println("Enter the elements");
+		for(int i=0;i<n;i++)
+		{
+			a[i]=sc.nextInt();
+		}
+		quick(a,0,n-1);
+		for(int x:a)
+		{
+			System.out.print(x+" ");
+		}
+	}
+}
+8 package dAA;
+
+import java.util.*;
+
+public class Min_Max {
+    static Scanner sc = new Scanner(System.in);
+    static int max = Integer.MIN_VALUE;
+    static int min = Integer.MAX_VALUE;
+    static int a[];
+    static int size;
+    static void MAXMIN(int i, int j) {
+        int min1, max1, mid;
+        if (i == j) {
+            max = min = a[i];
+        }
+        else if (i == j - 1) {
+            if (a[i] < a[j]) {
+                max = a[j];
+                min = a[i];
+            } else {
+                max = a[i];
+                min = a[j];
+            }
+        }
+        else {
+            mid = (i + j) / 2;
+            MAXMIN(i, mid);
+            max1 = max;
+            min1 = min;
+            MAXMIN(mid + 1, j);
+            if (max < max1) {
+                max = max1;
+            }
+            if (min > min1) {
+                min = min1;
+            }
+        }
+    }
+    public static void InputArray() {
+        System.out.println("Enter elements: ");
+        for (int i = 0; i < size; i++) {
+            a[i] = sc.nextInt();
+        }
+    }
+    public static void main(String[] args) {
+        System.out.println("Enter size of an array: ");
+        size = sc.nextInt();
+        a = new int[size];
+        InputArray();
+        long start = System.nanoTime();
+        MAXMIN(0, size - 1);
+        long end = System.nanoTime();
+        System.out.println("MAX value: " + max + " | Min value: " + min);
+        System.out.println("Time: " + (end - start) + " ns");
+    }
+}
+9 package dAA;
+import java.util.Scanner;
+
+class Knapsack1 {
+    int n;
+    double[] p;
+    double[] w;
+    double c;
+    public Knapsack1(int n, double c, double[] p, double[] w) {
+        this.n = n;
+        this.c = c;
+        this.p = p;
+        this.w = w;
+    }
+    void compute() {
+        int i;
+        double[] x = new double[n + 1];
+        for (i = 0; i < n; i++) {
+            x[i] = 0.0;
+        }
+        double rc = c;
+        for (i = 0; i < n; i++) {
+            if (w[i] > rc) {
+                break;
+            }
+            x[i] = 1.0;
+            rc = rc - w[i];
+        }
+        if (i < n) {
+            x[i] = rc / w[i];
+        }
+        double netprofit = 0.0;
+        System.out.println("The objects picked up into Knapsack are: ");
+        for (i = 0; i < n; i++) {
+            if (x[i] > 0.0) {
+                netprofit = netprofit + (x[i] * p[i]);
+            }
+            System.out.printf("%.2f ", x[i]);
+        }
+        System.out.printf("\nNet Profit: %.2f", netprofit);
+    }
+}
+
+public class knapsack_greedy {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter no. of objects: ");
+        int n = sc.nextInt();
+
+        double[] p = new double[n];
+        double[] w = new double[n];
+
+        System.out.println("Enter capacity of Knapsack: ");
+        double c = sc.nextDouble();
+
+        System.out.println("Enter profit for each " + n + " object: ");
+        for (int i = 0; i < n; i++) {
+            p[i] = sc.nextDouble();
+        }
+
+        System.out.println("Enter weight for each " + n + " object: ");
+        for (int i = 0; i < n; i++) {
+            w[i] = sc.nextDouble();
+        }
+        Knapsack1 gk = new Knapsack1(n, c, p, w);
+        gk.compute();
+
+        sc.close();
+    }
+}
+10 package dAA;
+import java.util.*;
+class Job {
+    int id;
+    int deadline;
+    int profit;
+    public Job(int id, int deadline, int profit) {
+        this.id = id;
+        this.deadline = deadline;
+        this.profit = profit;
+    }
+}
+public class JobSequence {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of jobs: ");
+        int n = sc.nextInt();
+        Job[] jobs = new Job[n];
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter id, deadline & profit " + (i + 1) + ": ");
+            int id = sc.nextInt();
+            int deadline = sc.nextInt();
+            int profit = sc.nextInt();
+            jobs[i] = new Job(id, deadline, profit);
+        }
+        System.out.println("Max profit sequence of jobs: ");
+        int maxprofit = jobSequencing(jobs, n);
+        System.out.println("Max profit: " + maxprofit);
+        sc.close();
+    }
+    public static int jobSequencing(Job[] jobs, int n) {
+        Arrays.sort(jobs, (a, b) -> b.profit - a.profit);
+        int maxDeadline = 0;
+        for (int i = 0; i < n; i++) {
+            if (jobs[i].deadline > maxDeadline) {
+                maxDeadline = jobs[i].deadline;
+            }
+        }
+        boolean[] result = new boolean[maxDeadline];
+        int[] jobsequence = new int[maxDeadline];
+        Arrays.fill(result, false);
+        Arrays.fill(jobsequence, -1);
+
+        int maxprofit = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = Math.min(maxDeadline, jobs[i].deadline) - 1; j >= 0; j--) {
+                if (result[j] == false) {
+                    result[j] = true;
+                    jobsequence[j] = i; 
+                    maxprofit += jobs[i].profit;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < maxDeadline; i++) {
+            if (jobsequence[i] != -1) {
+                System.out.print(jobs[jobsequence[i]].id + " ");
+            }
+        }
+        System.out.println();
+
+        return maxprofit;
+    }
+}
+11 import java.util.*;
 class PrimsAlgorithm
 {
 	public static void main(String[] args)
@@ -68,71 +443,79 @@ class PrimsAlgorithm
 		}
 	}
 }
-2 import java.util.*;
-public class Kruskal
-{
-	static int []parent=new int[10];
-	static int find(int a)
-	{
-		while(parent[a]!=0)
-		{
-			a=parent[a];
-		}
-		return a;
-	}
-	static void union(int a,int b)
-	{
-		parent[b]=a;
-	}
-	public static void main(String[] args)
-	{
-		Scanner sc=new Scanner(System.in);
-		int n,i,j,a=0,b=0,v=0,u=0,edge=1,min,cost=0;
-		int[][]w=new int[10][10];
-		System.out.println("Enter the number of vertex");
-		n=sc.nextInt();
-		System.out.println("Enter the cost matrix");
-		for(i=1;i<=n;i++)
-		{
-			for(j=1;j<=n;j++)
-			{
-				w[i][j]=sc.nextInt();
-				if(w[i][j]==0)
-				{
-					w[i][j]=99;
-				}
-			}
-		}
-		while(edge<n)
-		{
-			min=99;
-			for(i=1;i<=n;i++)
-			{
-				for(j=1;j<=n;j++)
-				{
-					if(w[i][j]<min)
-					{
-						min=w[i][j];
-						a=i;
-						b=j;
-					}
-				}
-			}
-			u=find(a);
-			v=find(b);
-			if(u!=v)
-			{
-				System.out.println("( "+a+","+b+")= "+min);
-				cost+=min;
-				union(u,v);
-				edge++;
-			}
-			w[a][b]=w[b][a]=99;
-		}
-		System.out.println("The min cost "+cost);
-	}
+12 import java.util.*;
+
+public class Kruskal {
+    int parent[] = new int[10];
+
+    int find(int m) {
+        int p = m;
+        while (parent[p] != 0) {
+            p = parent[p];
+        }
+        return p;
+    }
+
+    void union(int i, int j) {
+        if (i < j) {
+            parent[i] = j;
+        } else {
+            parent[j] = i;
+        }
+    }
+
+    void krkl(int a[][], int n) {
+        int u = 0, v = 0, min, k = 0, i, j, sum = 0;
+        
+        while (k < n - 1) {
+            min = 99;
+            
+            for (i = 1; i <= n; i++) {
+                for (j = 1; j <= n; j++) {
+                    if (a[i][j] < min && i != j) {
+                        min = a[i][j];
+                        u = i;
+                        v = j;
+                    }
+                }
+            }
+
+            i = find(u);
+            j = find(v);
+
+            if (i != j) {
+                union(i, j);
+                System.out.println("(" + u + "," + v + ") = " + a[u][v]);
+                sum = sum + a[u][v];
+                k++;
+            }
+
+            a[u][v] = a[v][u] = 99;
+        }
+
+        System.out.println("Cost of MST: " + sum);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter the number of vertices: ");
+        int n = sc.nextInt();
+        
+        int[][] a = new int[n + 1][n + 1];
+
+        System.out.println("Enter the weighted matrix: ");
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                a[i][j] = sc.nextInt();
+            }
+        }
+
+        Kruskal k = new Kruskal();
+        k.krkl(a, n);
+    }
 }
-3 package dAA;
+13 package dAA;
 
 import java.util.*;
 
@@ -227,7 +610,7 @@ public class Dijkstra
         }
     }
 }
-6 import java.util.*;
+17 import java.util.*;
 public class TSP
 {
 	static int besttour[]=new int[10];
@@ -299,7 +682,7 @@ public class TSP
 		tour[i]=temp;
 	}
 }
-7 import java.util.*;
+16 import java.util.*;
 public class DKnapsack
 {int n, c, p[], w[], v[][];
 public DKnapsack(int n, int c, int[] p, int[] w)
@@ -387,7 +770,7 @@ for(int j = 0; j <= c; j++)
         sc.close();
     }
 }
-8 import java.util.*;
+18 import java.util.*;
 
 public class Queen {
 
@@ -497,7 +880,7 @@ public class Queen {
         solution(4);
     }
 }
-9.import java.util.*;
+19.import java.util.*;
 
 public class Subset {
     static int c = 0;
@@ -564,7 +947,7 @@ public class Subset {
         }
     }
 }
-10.pakage dAA;
+20.pakage dAA;
 import java.util.*;
 
 public class Hamiltonian {
