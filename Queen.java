@@ -515,6 +515,7 @@ public class Kruskal {
         k.krkl(a, n);
     }
 }
+
 13 package dAA;
 
 import java.util.*;
@@ -610,78 +611,6 @@ public class Dijkstra
         }
     }
 }
-17 import java.util.*;
-public class TSP
-{
-	static int besttour[]=new int[10];
-	static int mincost=Integer.MAX_VALUE;
-	public static void main(String args[])
-	{
-		Scanner sc=new Scanner(System.in);
-		int [][]c=new int[10][10];
-		int [] tour=new int[10];
-		System.out.println("Enter the number of cities");
-		int n=sc.nextInt();
-		if(n==1)
-		{
-			System.out.println("Path is not Possible");
-		}
-		System.out.println("Enter the cost matrix");
-		{
-			for(int i=1;i<=n;i++)
-			{
-				for(int j=1;j<=n;j++)
-				{
-					c[i][j]=sc.nextInt();
-				}
-			}
-		}
-		for(int i=1;i<=n;i++)
-		{
-			tour[i]=i;
-		}
-		tsp(c,tour,2,n);
-		System.out.println("The Optimal tour is");
-		for(int i=1;i<=n;i++)
-		{
-			System.out.print(besttour[i]+" -----> ");
-		}
-		System.out.println("\nThe minimum cost = "+mincost);
-	}
-	static void tsp(int c[][],int tour[],int start,int n)
-	{
-		if(start>n)
-		{
-			int cost=0;
-			for(int i=1;i<=n;i++)
-			{
-				cost+=c[tour[i]][tour[i+1]];
-			}
-			cost+=c[tour[n]][tour[1]];
-			if(cost<mincost)
-			{
-				mincost=cost;
-				for(int i=1;i<=n;i++)
-				{
-					besttour[i]=tour[i];
-				}
-			}
-			return;
-		}
-		for(int i=start;i<=n;i++)
-		{
-			swap(tour,start,i);
-			tsp(c,tour,start+1,n);
-			swap(tour,start,i);
-		}
-	}
-	static void swap(int tour[],int start,int i)
-	{
-		int temp= tour[start];
-		tour[start]=tour[i];
-		tour[i]=temp;
-	}
-}
 16 import java.util.*;
 public class DKnapsack
 {int n, c, p[], w[], v[][];
@@ -769,6 +698,78 @@ for(int j = 0; j <= c; j++)
 
         sc.close();
     }
+}
+17 import java.util.*;
+public class TSP
+{
+	static int besttour[]=new int[10];
+	static int mincost=Integer.MAX_VALUE;
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int [][]c=new int[10][10];
+		int [] tour=new int[10];
+		System.out.println("Enter the number of cities");
+		int n=sc.nextInt();
+		if(n==1)
+		{
+			System.out.println("Path is not Possible");
+		}
+		System.out.println("Enter the cost matrix");
+		{
+			for(int i=1;i<=n;i++)
+			{
+				for(int j=1;j<=n;j++)
+				{
+					c[i][j]=sc.nextInt();
+				}
+			}
+		}
+		for(int i=1;i<=n;i++)
+		{
+			tour[i]=i;
+		}
+		tsp(c,tour,2,n);
+		System.out.println("The Optimal tour is");
+		for(int i=1;i<=n;i++)
+		{
+			System.out.print(besttour[i]+" -----> ");
+		}
+		System.out.println("\nThe minimum cost = "+mincost);
+	}
+	static void tsp(int c[][],int tour[],int start,int n)
+	{
+		while(start>n)
+		{
+			int cost=0;
+			for(int i=1;i<=n;i++)
+			{
+				cost+=c[tour[i]][tour[i+1]];
+			}
+			cost+=c[tour[n]][tour[1]];
+			if(cost<mincost)
+			{
+				mincost=cost;
+				for(int i=1;i<=n;i++)
+				{
+					besttour[i]=tour[i];
+				}
+			}
+			return;
+		}
+		for(int i=start;i<=n;i++)
+		{
+			swap(tour,start,i);
+			tsp(c,tour,start+1,n);
+			swap(tour,start,i);
+		}
+	}
+	static void swap(int tour[],int start,int i)
+	{
+		int temp= tour[start];
+		tour[start]=tour[i];
+		tour[i]=temp;
+	}
 }
 18 import java.util.*;
 
